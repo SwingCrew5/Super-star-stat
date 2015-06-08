@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CD1EC081B256D9700624D1A /* SqliteDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 4C51F7161B25696A00CAF57A /* SqliteDB.sqlite */; };
 		4CD592D01B25498D00F6ACC1 /* FMDatabase+InMemoryOnDiskIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD592C41B25498D00F6ACC1 /* FMDatabase+InMemoryOnDiskIO.m */; };
 		4CD592D11B25498D00F6ACC1 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD592C61B25498D00F6ACC1 /* FMDatabase.m */; };
 		4CD592D21B25498D00F6ACC1 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD592C81B25498D00F6ACC1 /* FMDatabaseAdditions.m */; };
@@ -253,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CD1EC081B256D9700624D1A /* SqliteDB.sqlite in Resources */,
 				4CE7C2FE1B254525001BC185 /* Main.storyboard in Resources */,
 				4CE7C3031B254525001BC185 /* LaunchScreen.xib in Resources */,
 				4CE7C3001B254525001BC185 /* Images.xcassets in Resources */,
