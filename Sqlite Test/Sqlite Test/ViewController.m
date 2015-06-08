@@ -23,7 +23,60 @@
         [self copyDatabase];
         createDB = YES;
     }
+    FMDatabaseQueue *queue = [[FMDatabaseQueue alloc ]initWithPath:[self appMainDatabaseFilePath]];
+    //Drop Table
+    [queue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"DROP TABLE SuperStarStats"];
+    }];
+    //Create Table SuperStarStats
+    [queue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS SuperStarStats(id INTEGER PRIMARY KEY, Date TEXT , Name TEXT , Points TEXT, Rebounds TEXT , Assists TEXT , Blocks TEXT , Steals TEXT)"];
+    }];
     
+    //Insert records
+    [queue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"INSERT INTO SuperStarStats (id ,Date , Name, Points, Rebounds , Assists , Blocks , Steals) VALUES (1,'2015-06-07','Lebron James', '39' , '16' , '11' ,'1' , '1')"];
+        [db executeUpdate:@"INSERT INTO SuperStarStats (id,Date , Name, Points, Rebounds , Assists , Blocks , Steals) VALUES (2,'2015-06-07','Stephen Curry', '0' , '0' , '0' ,'0' , '0')"];
+    }];
+    
+    //Read/Query records
+    [queue inDatabase:^(FMDatabase *db) {
+        FMResultSet *message = [db executeQuery:@"SELECT Date, Name, Points FROM SuperStarStats"];
+        while ([message next]){
+            NSLog(@"%@ %@ %@\n",[message stringForColumn:@"Date"],[message stringForColumn:@"Name"],[message stringForColumn:@"Points"]);
+            
+        }
+        [message close];
+    }];
+    
+    //Update a record
+    [queue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"REPLACE INTO SuperStarStats(id, Date, Name, Points, Rebounds , Assists , Blocks , Steals) VALUES(2,'2015-06-07','Stephen Curry','19','6','5','0','0')"];
+     }];
+    //Read/Query records
+    [queue inDatabase:^(FMDatabase *db){
+        FMResultSet *message = [db executeQuery:@"SELECT Date, Name, Points FROM SuperStarStats"];
+        while ([message next]){
+            NSLog(@"%@ %@ %@\n",[message stringForColumn:@"Date"],[message stringForColumn:@"Name"],[message stringForColumn:@"Points"]);
+            
+        }
+        [message close];
+    }];
+    
+    //Delete record
+    [ queue  inDatabase:^(FMDatabase *db){
+        [db executeUpdate:@"DELETE FROM SuperStarStats WHERE id = ?",@"2"];
+    }];
+    //Read/Query records
+    [queue inDatabase:^(FMDatabase *db){
+        FMResultSet *message = [db executeQuery:@"SELECT Date, Name, Points FROM SuperStarStats"];
+        while ([message next]){
+            NSLog(@"%@ %@ %@\n",[message stringForColumn:@"Date"],[message stringForColumn:@"Name"],[message stringForColumn:@"Points"]);
+            
+        }
+        [message close];
+    }];
+
 }
 
 - (void)didReceiveMemoryWarning {

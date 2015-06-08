@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FMDB.h"
 
-@interface ViewController : UIViewController{
+@interface ViewController : UIViewController  {
     BOOL createDB;
 }
 
