@@ -12,9 +12,11 @@ Goals:(ordered by priority and schedule)
 
 
 <mark>2015-06-09 Wiser edited</mark>
+
 1. "Sqlite Test" project does CRUD operation on DB named 'SqliteDB.sqlite' 
-2.SqliteDB.sqlite is stored at cache directory of app 
+2. SqliteDB.sqlite is stored at cache directory of app 
 (NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];)
+
 Final Goal: 
 
 (Please let Stan Hsu fills up this)
