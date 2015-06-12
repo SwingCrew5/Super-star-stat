@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FMDB.h"
-
+#import "StatsModel.h"
 @interface ViewController : UIViewController  {
     
 }

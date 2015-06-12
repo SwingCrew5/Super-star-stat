@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 Wiser. All rights reserved.
 //
 
-@interface StatsModel : NSThread <FSThreadProtocol>
+@interface StatsModel : NSThread  
 
 + (id)sharedInstance;
 @property (nonatomic) BOOL a;
