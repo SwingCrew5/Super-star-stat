@@ -17,6 +17,12 @@ Goals:(ordered by priority and schedule)
 2. SqliteDB.sqlite is stored at cache directory of app 
 (NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];)
 
+<mark>2015-06-12 Wiser edited</mark>
+
+1. Create data model "StatsModel" , used to access DB.
+2. Create DB class "DBAgent".
+3. StatsModel is saved as shareInstance ,singleton class.
+
 Final Goal: 
 
 (Please let Stan Hsu fills up this)
