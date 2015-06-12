@@ -10,11 +10,8 @@
 #import "FMDB.h"
 
 @interface ViewController : UIViewController  {
-    BOOL createDB;
+    
 }
 
-@property (readonly, nonatomic) NSString *mainDBName;
-
-- (NSString *)appMainDatabaseFilePath;
 @end
 

@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4CD1EC081B256D9700624D1A /* SqliteDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 4C51F7161B25696A00CAF57A /* SqliteDB.sqlite */; };
+		4CBF869A1B28358A00AA7325 /* SqliteDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 4C51F7161B25696A00CAF57A /* SqliteDB.sqlite */; };
+		4CBF86A11B2AEA6A00AA7325 /* DBAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBF86A01B2AEA6A00AA7325 /* DBAgent.m */; };
+		4CBF86A71B2AEEAA00AA7325 /* StatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBF86A61B2AEEAA00AA7325 /* StatsModel.m */; };
 		4CD592D01B25498D00F6ACC1 /* FMDatabase+InMemoryOnDiskIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD592C41B25498D00F6ACC1 /* FMDatabase+InMemoryOnDiskIO.m */; };
 		4CD592D11B25498D00F6ACC1 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD592C61B25498D00F6ACC1 /* FMDatabase.m */; };
 		4CD592D21B25498D00F6ACC1 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD592C81B25498D00F6ACC1 /* FMDatabaseAdditions.m */; };
@@ -35,7 +37,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4C51F7161B25696A00CAF57A /* SqliteDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SqliteDB.sqlite; sourceTree = "<group>"; };
+		4C51F7161B25696A00CAF57A /* SqliteDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = text; path = SqliteDB.sqlite; sourceTree = "<group>"; };
+		4CBF86A01B2AEA6A00AA7325 /* DBAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBAgent.m; sourceTree = "<group>"; };
+		4CBF86A31B2AEAB500AA7325 /* DBAgent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DBAgent.h; path = ../DBAgent.h; sourceTree = "<group>"; };
+		4CBF86A51B2AEE8900AA7325 /* StatsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StatsModel.h; path = ../StatsModel.h; sourceTree = "<group>"; };
+		4CBF86A61B2AEEAA00AA7325 /* StatsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsModel.m; sourceTree = "<group>"; };
 		4CD592C31B25498D00F6ACC1 /* FMDatabase+InMemoryOnDiskIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+InMemoryOnDiskIO.h"; sourceTree = "<group>"; };
 		4CD592C41B25498D00F6ACC1 /* FMDatabase+InMemoryOnDiskIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+InMemoryOnDiskIO.m"; sourceTree = "<group>"; };
 		4CD592C51B25498D00F6ACC1 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -138,6 +144,10 @@
 				4CE7C2F71B254525001BC185 /* AppDelegate.m */,
 				4CE7C2F91B254525001BC185 /* ViewController.h */,
 				4CE7C2FA1B254525001BC185 /* ViewController.m */,
+				4CBF86A51B2AEE8900AA7325 /* StatsModel.h */,
+				4CBF86A61B2AEEAA00AA7325 /* StatsModel.m */,
+				4CBF86A31B2AEAB500AA7325 /* DBAgent.h */,
+				4CBF86A01B2AEA6A00AA7325 /* DBAgent.m */,
 				4CE7C2FC1B254525001BC185 /* Main.storyboard */,
 				4CE7C2FF1B254525001BC185 /* Images.xcassets */,
 				4CE7C3011B254525001BC185 /* LaunchScreen.xib */,
@@ -254,7 +264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CD1EC081B256D9700624D1A /* SqliteDB.sqlite in Resources */,
+				4CBF869A1B28358A00AA7325 /* SqliteDB.sqlite in Resources */,
 				4CE7C2FE1B254525001BC185 /* Main.storyboard in Resources */,
 				4CE7C3031B254525001BC185 /* LaunchScreen.xib in Resources */,
 				4CE7C3001B254525001BC185 /* Images.xcassets in Resources */,
@@ -276,12 +286,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CD592D01B25498D00F6ACC1 /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
+				4CBF86A11B2AEA6A00AA7325 /* DBAgent.m in Sources */,
 				4CE7C2FB1B254525001BC185 /* ViewController.m in Sources */,
 				4CE7C2F81B254525001BC185 /* AppDelegate.m in Sources */,
 				4CD592D11B25498D00F6ACC1 /* FMDatabase.m in Sources */,
 				4CD592D51B25498D00F6ACC1 /* FMResultSet.m in Sources */,
 				4CD592D31B25498D00F6ACC1 /* FMDatabasePool.m in Sources */,
 				4CD592D21B25498D00F6ACC1 /* FMDatabaseAdditions.m in Sources */,
+				4CBF86A71B2AEEAA00AA7325 /* StatsModel.m in Sources */,
 				4CE7C2F51B254525001BC185 /* main.m in Sources */,
 				4CD592D41B25498D00F6ACC1 /* FMDatabaseQueue.m in Sources */,
 			);
