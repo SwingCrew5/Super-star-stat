@@ -10,4 +10,5 @@
 
 + (id)sharedInstance;
 @property (nonatomic) BOOL a;
+-(void)addAssist:(NSNumber *)id ;
 @end

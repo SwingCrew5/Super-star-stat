@@ -23,6 +23,11 @@ Goals:(ordered by priority and schedule)
 2. Create DB class "DBAgent".
 3. StatsModel is saved as shareInstance ,singleton class.
 
+<mark>2015-06-23 Wiser edited</mark>
+1. Reform the DB data structure for SuperStarStats table table.(same as spec)
+2. Create a data model function to add an assist & update table for primary key game id.(id is one and only unique)
+
+
 Final Goal: 
 
 (Please let Stan Hsu fills up this)

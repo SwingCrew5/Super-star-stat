@@ -15,6 +15,7 @@
 @end
 @implementation StatsModel
 static StatsModel *sharedInstance = nil;
+int assist;
 + (id)sharedInstance {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -24,6 +25,7 @@ static StatsModel *sharedInstance = nil;
 }
 - (id)init {
     if (self = [super init]) {
+        assist=15;
         //Access DB in Data Model , it should refined as functions
         DBAgent* dbAgent = [[DBAgent alloc]initWithPath:@""];
         //Drop Table
@@ -32,60 +34,54 @@ static StatsModel *sharedInstance = nil;
         }];
         //Create Table SuperStarStats
         [dbAgent inDatabase:^(FMDatabase *db) {
-            [db executeUpdate:@"CREATE TABLE IF NOT EXISTS SuperStarStats(id INTEGER PRIMARY KEY, Date TEXT , Name TEXT, Points INTEGER, Rebounds INTEGER , Assists INTEGER , Blocks INTEGER , Steals INTEGER ,Two_attempts INTEGER , Two_goals INTEGER , Three_attempts INTEGER , Three_goals INTEGER , FT_attempts INTEGER, FT_goals INTEGER)"];
+            [db executeUpdate:@"CREATE TABLE IF NOT EXISTS SuperStarStats( id INTEGER PRIMARY KEY, date TEXT , name TEXT , offRebound INTEGER,defRebound INTEGER, assist INTEGER , block INTEGER , steal INTEGER ,twoAttempt INTEGER , twoMade INTEGER , threeAttempt INTEGER , threeMade INTEGER , ftAttempt INTEGER, ftMade INTEGER ,turnOver INTEGER,foul INTEGER)"];
         }];
-         //Drop Table
-         [dbAgent inDatabase:^(FMDatabase *db) {
-         [db executeUpdate:@"DROP TABLE SuperStarStats"];
-         }];
-         //Create Table SuperStarStats
-         [dbAgent inDatabase:^(FMDatabase *db) {
-         [db executeUpdate:@"CREATE TABLE IF NOT EXISTS SuperStarStats(id INTEGER PRIMARY KEY, Date TEXT , Name TEXT, Points INTEGER, Rebounds INTEGER , Assists INTEGER , Blocks INTEGER , Steals INTEGER ,Two_attempts INTEGER , Two_goals INTEGER , Three_attempts INTEGER , Three_goals INTEGER , FT_attempts INTEGER, FT_goals INTEGER)"];
-         }];
+
          
          //Insert records
          [dbAgent inDatabase:^(FMDatabase *db) {
-         [db executeUpdate:@"INSERT INTO SuperStarStats (id ,Date , Name, Points, Rebounds , Assists , Blocks , Steals,Two_attempts  , Two_goals  , Three_attempts  , Three_goals  , FT_attempts , FT_goals ) VALUES (1,'2015-06-07','Lebron James', '39' , '16' , '11' ,'1' , '1' , '0', '0', '0', '0', '0', '0')"];
-         [db executeUpdate:@"INSERT INTO SuperStarStats (id,Date , Name, Points, Rebounds , Assists , Blocks , Steals,Two_attempts  , Two_goals  , Three_attempts  , Three_goals  , FT_attempts , FT_goals ) VALUES (2,'2015-06-07','Stephen Curry', '0' , '0' , '0' ,'0' , '0', '0', '0', '0', '0', '0', '0')"];
+             [db executeUpdate:@"INSERT INTO SuperStarStats( id , date , name  , offRebound  , defRebound , assist  , block  , steal  , twoAttempt  , twoMade  , threeAttempt  , threeMade  , ftAttempt  , ftMade  , turnOver , foul ) VALUES(1 , '2015-06-07' , 'Lebron James' , 3 , 7 , 11 , 1 , 1 , 20 , 10 , 10 , 4 , 15 ,  12 , 2 , 3 )"];
+             [db executeUpdate:@"INSERT INTO SuperStarStats ( id , date , name  , offRebound  , defRebound , assist  , block  , steal  , twoAttempt  , twoMade  , threeAttempt  , threeMade  , ftAttempt  , ftMade  , turnOver , foul ) VALUES(2 , '2015-06-09' , 'Stephen Curry' , 1 , 4 , ? , 0 , 3 , 15 , 10 , 12 , 5 , 10 ,  9 , 1 , 2 )" , [NSNumber numberWithInt:assist]];
          }];
          
          //Read/Query records
          [dbAgent inDatabase:^(FMDatabase *db) {
-         FMResultSet *message = [db executeQuery:@"SELECT Date, Name, Points FROM SuperStarStats"];
+         FMResultSet *message = [db executeQuery:@"SELECT date, name , assist FROM SuperStarStats"];
          while ([message next]){
-         NSLog(@"%@ %@ %@\n",[message stringForColumn:@"Date"],[message stringForColumn:@"Name"],[message stringForColumn:@"Points"]);
+             NSLog(@"%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
          
          }
          [message close];
          }];
-         
-         //Update a record
-         [dbAgent inDatabase:^(FMDatabase *db) {
-         [db executeUpdate:@"REPLACE INTO SuperStarStats(id, Date, Name, Points, Rebounds , Assists , Blocks , Steals) VALUES(2,'2015-06-07','Stephen Curry','19','6','5','0','0')"];
-         }];
+//         //Update record
+//         [dbAgent inDatabase:^(FMDatabase *db) {
+//         [db executeUpdate:@"UPDATE SuperStarStats SET assist=17  WHERE id=2"];
+//         }];
+//        
+//         //Read/Query records
+//         [dbAgent inDatabase:^(FMDatabase *db){
+//         FMResultSet *message = [db executeQuery:@"SELECT date, name FROM SuperStarStats"];
+//         while ([message next]){
+//             NSLog(@"%@ %@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"]);
+//         
+//         }
+//         [message close];
+//         }];
+        
+//         //Delete record
+//         [ dbAgent  inDatabase:^(FMDatabase *db){
+//         [db executeUpdate:@"DELETE FROM SuperStarStats WHERE id = ?",@"2"];
+//         }];
+        
          //Read/Query records
-         [dbAgent inDatabase:^(FMDatabase *db){
-         FMResultSet *message = [db executeQuery:@"SELECT Date, Name, Points FROM SuperStarStats"];
-         while ([message next]){
-         NSLog(@"%@ %@ %@\n",[message stringForColumn:@"Date"],[message stringForColumn:@"Name"],[message stringForColumn:@"Points"]);
-         
-         }
-         [message close];
-         }];
-         
-         //Delete record
-         [ dbAgent  inDatabase:^(FMDatabase *db){
-         [db executeUpdate:@"DELETE FROM SuperStarStats WHERE id = ?",@"2"];
-         }];
-         //Read/Query records
-         [dbAgent inDatabase:^(FMDatabase *db){
-         FMResultSet *message = [db executeQuery:@"SELECT Date, Name, Points FROM SuperStarStats"];
-         while ([message next]){
-         NSLog(@"%@ %@ %@\n",[message stringForColumn:@"Date"],[message stringForColumn:@"Name"],[message stringForColumn:@"Points"]);
-         
-         }
-         [message close];
-         }];
+//         [dbAgent inDatabase:^(FMDatabase *db){
+//         FMResultSet *message = [db executeQuery:@"SELECT date, name FROM SuperStarStats"];
+//         while ([message next]){
+//             NSLog(@"%@ %@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"]);
+//         
+//         }
+//         [message close];
+//         }];
     }
     return self;
 }
@@ -94,5 +90,23 @@ static StatsModel *sharedInstance = nil;
 }
 - (void)main {
     
+}
+-(void)addAssist:(NSNumber *)id {
+    assist++;
+    //Access DB in Data Model , it should refined as functions
+    DBAgent* dbAgent = [[DBAgent alloc]initWithPath:@""];
+    [dbAgent inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"UPDATE SuperStarStats SET assist=?  WHERE id=?" ,[NSNumber numberWithInt:assist],id];
+    }];
+    
+    //Read/Query records
+    [dbAgent inDatabase:^(FMDatabase *db) {
+        FMResultSet *message = [db executeQuery:@"SELECT date, name , assist FROM SuperStarStats"];
+        while ([message next]){
+            NSLog(@"%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
+            
+        }
+        [message close];
+    }];
 }
 @end
