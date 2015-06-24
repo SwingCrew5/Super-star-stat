@@ -16,6 +16,7 @@
 @implementation StatsModel
 static StatsModel *sharedInstance = nil;
 int assist;
+
 + (id)sharedInstance {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -26,6 +27,7 @@ int assist;
 - (id)init {
     if (self = [super init]) {
         assist=15;
+        [self loadDataFromDB:[NSNumber numberWithInt:2]];
         //Access DB in Data Model , it should refined as functions
         DBAgent* dbAgent = [[DBAgent alloc]initWithPath:@""];
         //Drop Table
@@ -48,7 +50,7 @@ int assist;
          [dbAgent inDatabase:^(FMDatabase *db) {
          FMResultSet *message = [db executeQuery:@"SELECT date, name , assist FROM SuperStarStats"];
          while ([message next]){
-             NSLog(@"%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
+             NSLog(@"\n%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
          
          }
          [message close];
@@ -91,8 +93,45 @@ int assist;
 - (void)main {
     
 }
--(void)addAssist:(NSNumber *)id {
+-(void)loadDataFromDB:(NSNumber*)id{
+    DBAgent* dbAgent = [[DBAgent alloc]initWithPath:@""];
+    //Read/Query records
+    [dbAgent inDatabase:^(FMDatabase *db) {
+        FMResultSet *message = [db executeQuery:@"SELECT id , date , name  , offRebound  , defRebound , assist  , block  , steal  , twoAttempt  , twoMade  , threeAttempt  , threeMade  , ftAttempt  , ftMade  , turnOver , foul FROM SuperStarStats WHERE id= ?",id];
+        _dataDic = [[NSMutableDictionary alloc]init];
+        while ([message next]){
+            NSLog(@"\n%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
+            [_dataDic setDictionary: @{
+                        @"id":[message stringForColumn:@"id"],
+                        @"date":[message stringForColumn:@"date"],
+                        @"name":[message stringForColumn:@"name"],
+                        @"offRebound":[message stringForColumn:@"offRebound"],
+                        @"defRebound":[message stringForColumn:@"defRebound"],
+                        @"assist":[message stringForColumn:@"assist"],
+                        @"block":[message stringForColumn:@"block"],
+                        @"steal":[message stringForColumn:@"steal"],
+                        @"twoAttempt":[message stringForColumn:@"twoAttempt"],
+                        @"twoMade":[message stringForColumn:@"twoMade"],
+                        @"threeAttempt":[message stringForColumn:@"threeAttempt"],
+                        @"threeMade":[message stringForColumn:@"threeMade"],
+                        @"ftAttempt":[message stringForColumn:@"ftAttempt"],
+                        @"ftMade":[message stringForColumn:@"ftMade"],
+                        @"turnOver":[message stringForColumn:@"turnOver"],
+                        @"foul":[message stringForColumn:@"foul"],
+                        }];
+            
+        }
+        [message close];
+    }];
+    
+}
+-(void)incAssist:(NSNumber *)id {
+    
+    int assist;
+    assist = [[_dataDic objectForKey:@"assist"]intValue];
     assist++;
+    [_dataDic setObject:[NSNumber numberWithInt:assist] forKey:@"assist"];
+    
     //Access DB in Data Model , it should refined as functions
     DBAgent* dbAgent = [[DBAgent alloc]initWithPath:@""];
     [dbAgent inDatabase:^(FMDatabase *db) {
@@ -103,10 +142,25 @@ int assist;
     [dbAgent inDatabase:^(FMDatabase *db) {
         FMResultSet *message = [db executeQuery:@"SELECT date, name , assist FROM SuperStarStats"];
         while ([message next]){
-            NSLog(@"%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
+            NSLog(@"\n%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
             
         }
         [message close];
     }];
 }
+-(void)missFT:(NSNumber *)id {
+
+}
+-(void)madeFT:(NSNumber *)id {}
+-(void)miss3pts:(NSNumber *)id {}
+-(void)made3pts:(NSNumber *)id {}
+-(void)miss2pts:(NSNumber *)id {}
+-(void)made2pts:(NSNumber *)id {}
+-(void)incDefRebound:(NSNumber *)id {}
+-(void)incOffRebound:(NSNumber *)id {}
+
+-(void)incSteal:(NSNumber *)id {}
+-(void)incBlock:(NSNumber *)id {}
+-(void)incTurnOver:(NSNumber *)id {}
+-(void)incFoul:(NSNumber *)id {}
 @end

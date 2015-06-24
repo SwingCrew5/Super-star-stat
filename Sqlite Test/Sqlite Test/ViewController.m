@@ -20,7 +20,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     statsModel = [StatsModel sharedInstance] ;
     //add an assist for stephen curry's game
-    [statsModel addAssist:[NSNumber numberWithInt:2]];
+    [statsModel incAssist:[NSNumber numberWithInt:2]];
     
 
 }

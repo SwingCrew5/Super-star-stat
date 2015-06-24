@@ -30,6 +30,10 @@ Goals:(ordered by priority and schedule)
 
 2. Create a data model function to add an assist & update table for primary key game id.(id is one and only unique)
 
+<mark>2015-06-24 Wiser edited</mark>
+
+1. loadDataFromDB load DB data to NSMutableDictionary dataDic.
+2. incAssist function uses dataDic to increse itself and update DB.
 
 Final Goal: 
 

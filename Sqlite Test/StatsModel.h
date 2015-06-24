@@ -10,5 +10,20 @@
 
 + (id)sharedInstance;
 @property (nonatomic) BOOL a;
--(void)addAssist:(NSNumber *)id ;
+@property (nonatomic) NSMutableDictionary *dataDic;
+-(void)loadDataFromDB:(NSNumber *)id;
+-(void)incAssist:(NSNumber *)id ;
+-(void)missFT:(NSNumber *)id ;
+-(void)madeFT:(NSNumber *)id ;
+-(void)miss3pts:(NSNumber *)id ;
+-(void)made3pts:(NSNumber *)id ;
+-(void)miss2pts:(NSNumber *)id ;
+-(void)made2pts:(NSNumber *)id ;
+-(void)incDefRebound:(NSNumber *)id ;
+-(void)incOffRebound:(NSNumber *)id ;
+
+-(void)incSteal:(NSNumber *)id ;
+-(void)incBlock:(NSNumber *)id ;
+-(void)incTurnOver:(NSNumber *)id ;
+-(void)incFoul:(NSNumber *)id ;
 @end
