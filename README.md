@@ -39,6 +39,8 @@ Goals:(ordered by priority and schedule)
    example: point = 2pt made+3pt made+free throw made
 2. Statistics show on the bottom with date,player name,point,rebound,assist.
 3. Assist botton increase assist value in DB and dataDic respectively.
+4. Setup all statistic labels and button, link-up functions in data model.
+
 
 Final Goal: 
 
