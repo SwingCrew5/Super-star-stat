@@ -11,6 +11,7 @@
 + (id)sharedInstance;
 @property (nonatomic) BOOL a;
 @property (nonatomic) NSMutableDictionary *dataDic;
+-(NSObject*)getStats:(NSString*)type;
 -(void)loadDataFromDB:(NSNumber *)id;
 -(void)incAssist:(NSNumber *)id ;
 -(void)missFT:(NSNumber *)id ;

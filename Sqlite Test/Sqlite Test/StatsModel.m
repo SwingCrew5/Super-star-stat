@@ -30,31 +30,31 @@ int assist;
         [self loadDataFromDB:[NSNumber numberWithInt:2]];
         //Access DB in Data Model , it should refined as functions
         DBAgent* dbAgent = [[DBAgent alloc]initWithPath:@""];
-        //Drop Table
-        [dbAgent inDatabase:^(FMDatabase *db) {
-            [db executeUpdate:@"DROP TABLE SuperStarStats"];
-        }];
-        //Create Table SuperStarStats
-        [dbAgent inDatabase:^(FMDatabase *db) {
-            [db executeUpdate:@"CREATE TABLE IF NOT EXISTS SuperStarStats( id INTEGER PRIMARY KEY, date TEXT , name TEXT , offRebound INTEGER,defRebound INTEGER, assist INTEGER , block INTEGER , steal INTEGER ,twoAttempt INTEGER , twoMade INTEGER , threeAttempt INTEGER , threeMade INTEGER , ftAttempt INTEGER, ftMade INTEGER ,turnOver INTEGER,foul INTEGER)"];
-        }];
-
-         
-         //Insert records
-         [dbAgent inDatabase:^(FMDatabase *db) {
-             [db executeUpdate:@"INSERT INTO SuperStarStats( id , date , name  , offRebound  , defRebound , assist  , block  , steal  , twoAttempt  , twoMade  , threeAttempt  , threeMade  , ftAttempt  , ftMade  , turnOver , foul ) VALUES(1 , '2015-06-07' , 'Lebron James' , 3 , 7 , 11 , 1 , 1 , 20 , 10 , 10 , 4 , 15 ,  12 , 2 , 3 )"];
-             [db executeUpdate:@"INSERT INTO SuperStarStats ( id , date , name  , offRebound  , defRebound , assist  , block  , steal  , twoAttempt  , twoMade  , threeAttempt  , threeMade  , ftAttempt  , ftMade  , turnOver , foul ) VALUES(2 , '2015-06-09' , 'Stephen Curry' , 1 , 4 , ? , 0 , 3 , 15 , 10 , 12 , 5 , 10 ,  9 , 1 , 2 )" , [NSNumber numberWithInt:assist]];
-         }];
-         
-         //Read/Query records
-         [dbAgent inDatabase:^(FMDatabase *db) {
-         FMResultSet *message = [db executeQuery:@"SELECT date, name , assist FROM SuperStarStats"];
-         while ([message next]){
-             NSLog(@"\n%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
-         
-         }
-         [message close];
-         }];
+//        //Drop Table
+//        [dbAgent inDatabase:^(FMDatabase *db) {
+//            [db executeUpdate:@"DROP TABLE SuperStarStats"];
+//        }];
+//        //Create Table SuperStarStats
+//        [dbAgent inDatabase:^(FMDatabase *db) {
+//            [db executeUpdate:@"CREATE TABLE IF NOT EXISTS SuperStarStats( id INTEGER PRIMARY KEY, date TEXT , name TEXT , offRebound INTEGER,defRebound INTEGER, assist INTEGER , block INTEGER , steal INTEGER ,twoAttempt INTEGER , twoMade INTEGER , threeAttempt INTEGER , threeMade INTEGER , ftAttempt INTEGER, ftMade INTEGER ,turnOver INTEGER,foul INTEGER)"];
+//        }];
+//
+//         
+//         //Insert records
+//         [dbAgent inDatabase:^(FMDatabase *db) {
+//             [db executeUpdate:@"INSERT INTO SuperStarStats( id , date , name  , offRebound  , defRebound , assist  , block  , steal  , twoAttempt  , twoMade  , threeAttempt  , threeMade  , ftAttempt  , ftMade  , turnOver , foul ) VALUES(1 , '2015-06-07' , 'Lebron James' , 3 , 7 , 11 , 1 , 1 , 20 , 10 , 10 , 4 , 15 ,  12 , 2 , 3 )"];
+//             [db executeUpdate:@"INSERT INTO SuperStarStats ( id , date , name  , offRebound  , defRebound , assist  , block  , steal  , twoAttempt  , twoMade  , threeAttempt  , threeMade  , ftAttempt  , ftMade  , turnOver , foul ) VALUES(2 , '2015-06-09' , 'Stephen Curry' , 1 , 4 , ? , 0 , 3 , 15 , 10 , 12 , 5 , 10 ,  9 , 1 , 2 )" , [NSNumber numberWithInt:assist]];
+//         }];
+//         
+//         //Read/Query records
+//         [dbAgent inDatabase:^(FMDatabase *db) {
+//         FMResultSet *message = [db executeQuery:@"SELECT date, name , assist FROM SuperStarStats"];
+//         while ([message next]){
+//             NSLog(@"\n%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
+//         
+//         }
+//         [message close];
+//         }];
 //         //Update record
 //         [dbAgent inDatabase:^(FMDatabase *db) {
 //         [db executeUpdate:@"UPDATE SuperStarStats SET assist=17  WHERE id=2"];
@@ -76,14 +76,14 @@ int assist;
 //         }];
         
          //Read/Query records
-//         [dbAgent inDatabase:^(FMDatabase *db){
-//         FMResultSet *message = [db executeQuery:@"SELECT date, name FROM SuperStarStats"];
-//         while ([message next]){
-//             NSLog(@"%@ %@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"]);
-//         
-//         }
-//         [message close];
-//         }];
+         [dbAgent inDatabase:^(FMDatabase *db){
+         FMResultSet *message = [db executeQuery:@"SELECT date, name FROM SuperStarStats"];
+         while ([message next]){
+             NSLog(@"%@ %@ assist=%@\n",[message stringForColumn:@"date"],[message stringForColumn:@"name"],[message stringForColumn:@"assist"]);
+         
+         }
+         [message close];
+         }];
     }
     return self;
 }
@@ -92,6 +92,22 @@ int assist;
 }
 - (void)main {
     
+}
+-(NSObject*)getStats:(NSString*)type{
+    if([type isEqualToString:@"date"])
+       return  [_dataDic objectForKey:type];
+    else if([type isEqualToString:@"name"])
+       return  [_dataDic objectForKey:type];
+    else if([type isEqualToString:@"point"])
+       return [NSNumber numberWithInt:[[_dataDic objectForKey:@"twoMade"]intValue]*2+
+                                      [[_dataDic objectForKey:@"threeMade"]intValue]*3+
+                                      [[_dataDic objectForKey:@"ftMade"]intValue]];
+    else if([type isEqualToString:@"rebound"])
+        return [NSNumber numberWithInt:[[_dataDic objectForKey:@"offRebound"]intValue]+
+                [[_dataDic objectForKey:@"defRebound"]intValue]];
+    else if([type isEqualToString:@"assist"])
+        return [NSNumber numberWithInt:[[_dataDic objectForKey:type]intValue]];
+    return @"";
 }
 -(void)loadDataFromDB:(NSNumber*)id{
     DBAgent* dbAgent = [[DBAgent alloc]initWithPath:@""];

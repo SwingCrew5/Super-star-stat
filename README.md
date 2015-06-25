@@ -14,7 +14,6 @@ Goals:(ordered by priority and schedule)
 <mark>2015-06-09 Wiser edited</mark>
 
 1. "Sqlite Test" project does CRUD operation on DB named 'SqliteDB.sqlite' 
-
 2. SqliteDB.sqlite is stored at cache directory of app 
 (NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];)
 
@@ -27,13 +26,19 @@ Goals:(ordered by priority and schedule)
 <mark>2015-06-23 Wiser edited</mark>
 
 1. Reform the DB data structure for SuperStarStats table table.(same as spec)
-
 2. Create a data model function to add an assist & update table for primary key game id.(id is one and only unique)
 
 <mark>2015-06-24 Wiser edited</mark>
 
 1. loadDataFromDB load DB data to NSMutableDictionary dataDic.
 2. incAssist function uses dataDic to increse itself and update DB.
+
+<mark>2015-06-25 Wiser edited</mark>
+
+1. getStats get statistics from dataDic by high level key value and recalculate    from values in dataDic.
+   example: point = 2pt made+3pt made+free throw made
+2. Statistics show on the bottom with date,player name,point,rebound,assist.
+3. Assist botton increase assist value in DB and dataDic respectively.
 
 Final Goal: 
 
