@@ -26,8 +26,9 @@ int assist;
 }
 - (id)init {
     if (self = [super init]) {
+        _gameID=2;
         assist=15;
-        [self loadDataFromDB:[NSNumber numberWithInt:2]];
+        [self loadDataFromDB:[NSNumber numberWithInt:_gameID]];
         //Access DB in Data Model , it should refined as functions
         DBAgent* dbAgent = [[DBAgent alloc]initWithPath:@""];
         //Drop Table
@@ -454,5 +455,22 @@ int assist;
         }
         [message close];
     }];
+}
+-(void)nextGame{
+    NSLog(@"next game\n");
+    DBAgent* dbAgent = [[DBAgent alloc]initWithPath:@""];
+    //Insert records
+    [dbAgent inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"INSERT INTO SuperStarStats( date , name  , offRebound  , defRebound , assist  , block  , steal  , twoAttempt  , twoMade  , threeAttempt  , threeMade  , ftAttempt  , ftMade  , turnOver , foul ) VALUES( '2015-07-13' , 'Lebron James' , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,  0 , 0 , 0 )"];
+        FMResultSet *message = [db executeQuery:@"SELECT id FROM SuperStarStats WHERE id = (SELECT MAX(id) FROM SuperStarStats)"];
+        while ([message next]){
+            NSLog(@"id=%@\n",[message stringForColumn:@"id"]);
+            
+        }
+        _gameID=[[message stringForColumn:@"id"]intValue];
+        [message close];
+            
+    }];
+    
 }
 @end

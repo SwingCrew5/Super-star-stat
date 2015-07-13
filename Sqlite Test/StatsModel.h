@@ -9,7 +9,7 @@
 @interface StatsModel : NSThread  
 
 + (id)sharedInstance;
-@property (nonatomic) BOOL a;
+@property (nonatomic) int gameID;
 @property (nonatomic) NSMutableDictionary *dataDic;
 -(NSObject*)getStats:(NSString*)type;
 -(void)loadDataFromDB:(NSNumber *)id;
@@ -27,4 +27,5 @@
 -(void)incBlock:(NSNumber *)id ;
 -(void)incTurnOver:(NSNumber *)id ;
 -(void)incFoul:(NSNumber *)id ;
+-(void)nextGame;
 @end

@@ -42,6 +42,15 @@ Goals:(ordered by priority and schedule)
 4. Setup all statistic labels and button, link-up functions in data model.
 
 
+<mark>2015-06-25 Wiser edited</mark>
+
+1. Add nextGameBtn and nextGame in ViewController and StatsModel.
+2. nextGame function inserts a new constant record (modify later),
+   then updates global variable gameID to indicate the new game record manipulation.
+3. todo: 
+	a.newGame:Alert window to fill the name and date info of new record.
+	b.List button triggers a new view controller to query history records.
+
 Final Goal: 
 
 (Please let Stan Hsu fills up this)

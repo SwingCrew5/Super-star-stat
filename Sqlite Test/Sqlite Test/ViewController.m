@@ -12,6 +12,7 @@
     NSMutableArray *layoutConstraints;
     StatsModel *statsModel;
 }
+@property (nonatomic, strong) UIButton *nextGameBtn;
 @property (nonatomic, strong) UIButton *twoMadeBtn;
 @property (nonatomic, strong) UIButton *twoMissBtn;
 @property (nonatomic, strong) UIButton *threeMadeBtn;
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) UIButton *blockBtn;
 @property (nonatomic, strong) UIButton *turnOverBtn;
 @property (nonatomic, strong) UIButton *foulBtn;
+
 
 @property (nonatomic, strong) UILabel  *statsLabel;
 @property (nonatomic, strong) UILabel  *dateLabel;
@@ -64,56 +66,59 @@
 //}
 -(void)btnClick:(UIButton *)btn{
     if ([btn isEqual:_twoMadeBtn]) {
-        [statsModel made2pts:[NSNumber numberWithInt:2]];
+        [statsModel made2pts:[NSNumber numberWithInt:[statsModel gameID]]];
         [_pointLabel setText:[NSString stringWithFormat:@"%d pt",[(NSNumber*)[statsModel getStats:@"point"] intValue]]];
     }
     if ([btn isEqual:_twoMissBtn]) {
-        [statsModel miss2pts:[NSNumber numberWithInt:2]];
+        [statsModel miss2pts:[NSNumber numberWithInt:[statsModel gameID]]];
         [_pointLabel setText:[NSString stringWithFormat:@"%d pt",[(NSNumber*)[statsModel getStats:@"point"] intValue]]];
     }
     if ([btn isEqual:_threeMadeBtn]) {
-        [statsModel made3pts:[NSNumber numberWithInt:2]];
+        [statsModel made3pts:[NSNumber numberWithInt:[statsModel gameID]]];
         [_pointLabel setText:[NSString stringWithFormat:@"%d pt",[(NSNumber*)[statsModel getStats:@"point"] intValue]]];
     }
     if ([btn isEqual:_threeMissBtn]) {
-        [statsModel miss3pts:[NSNumber numberWithInt:2]];
+        [statsModel miss3pts:[NSNumber numberWithInt:[statsModel gameID]]];
         [_pointLabel setText:[NSString stringWithFormat:@"%d pt",[(NSNumber*)[statsModel getStats:@"point"] intValue]]];
     }
     if ([btn isEqual:_ftMadeBtn]) {
-        [statsModel madeFT:[NSNumber numberWithInt:2]];
+        [statsModel madeFT:[NSNumber numberWithInt:[statsModel gameID]]];
         [_pointLabel setText:[NSString stringWithFormat:@"%d pt",[(NSNumber*)[statsModel getStats:@"point"] intValue]]];
     }
     if ([btn isEqual:_ftMissBtn]) {
-        [statsModel missFT:[NSNumber numberWithInt:2]];
+        [statsModel missFT:[NSNumber numberWithInt:[statsModel gameID]]];
         [_pointLabel setText:[NSString stringWithFormat:@"%d pt",[(NSNumber*)[statsModel getStats:@"point"] intValue]]];
     }
     if ([btn isEqual:_defRebBtn]) {
-        [statsModel incDefRebound:[NSNumber numberWithInt:2]];
+        [statsModel incDefRebound:[NSNumber numberWithInt:[statsModel gameID]]];
         [_reboundLabel setText:[NSString stringWithFormat:@"%d reb",[(NSNumber*)[statsModel getStats:@"rebound"] intValue]]];
     }
     if ([btn isEqual:_offRebBtn]) {
-        [statsModel incOffRebound:[NSNumber numberWithInt:2]];
+        [statsModel incOffRebound:[NSNumber numberWithInt:[statsModel gameID]]];
         [_reboundLabel setText:[NSString stringWithFormat:@"%d reb",[(NSNumber*)[statsModel getStats:@"rebound"] intValue]]];
     }
     if ([btn isEqual:_assistBtn]) {
-        [statsModel incAssist:[NSNumber numberWithInt:2]];
+        [statsModel incAssist:[NSNumber numberWithInt:[statsModel gameID]]];
         [_assistLabel setText:[NSString stringWithFormat:@"%d ast",[(NSNumber*)[statsModel getStats:@"assist"] intValue]]];
     }
     if ([btn isEqual:_stealBtn]) {
-        [statsModel incSteal:[NSNumber numberWithInt:2]];
+        [statsModel incSteal:[NSNumber numberWithInt:[statsModel gameID]]];
         [_stealLabel setText:[NSString stringWithFormat:@"%d stl",[(NSNumber*)[statsModel getStats:@"steal"] intValue]]];
     }
     if ([btn isEqual:_blockBtn]) {
-        [statsModel incBlock:[NSNumber numberWithInt:2]];
+        [statsModel incBlock:[NSNumber numberWithInt:[statsModel gameID]]];
         [_blockLabel setText:[NSString stringWithFormat:@"%d blk",[(NSNumber*)[statsModel getStats:@"block"] intValue]]];
     }
     if ([btn isEqual:_turnOverBtn]) {
-        [statsModel incTurnOver:[NSNumber numberWithInt:2]];
+        [statsModel incTurnOver:[NSNumber numberWithInt:[statsModel gameID]]];
         [_turnOverLabel setText:[NSString stringWithFormat:@"%d turnover",[(NSNumber*)[statsModel getStats:@"turnOver"] intValue]]];
     }
     if ([btn isEqual:_foulBtn]) {
-        [statsModel incFoul:[NSNumber numberWithInt:2]];
+        [statsModel incFoul:[NSNumber numberWithInt:[statsModel gameID]]];
         [_foulLabel setText:[NSString stringWithFormat:@"%d foul",[(NSNumber*)[statsModel getStats:@"foul"] intValue]]];
+    }
+    if ([btn isEqual:_nextGameBtn]) {
+        [statsModel nextGame];
     }
 }
 - (void)viewDidLoad {
@@ -215,6 +220,13 @@
     _foulBtn.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_foulBtn];
     
+    _nextGameBtn = [[UIButton alloc] init];
+    [_nextGameBtn setBackgroundColor:[UIColor purpleColor]];
+    [_nextGameBtn setTitle:@"New Game" forState:UIControlStateNormal];
+    [_nextGameBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _nextGameBtn.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_nextGameBtn];
+    
     
     _statsLabel =[[UILabel alloc]init];
     [_statsLabel setBackgroundColor:[UIColor lightGrayColor]];
@@ -278,7 +290,7 @@
     _foulLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_foulLabel];
     
-    NSDictionary *objDictionary = NSDictionaryOfVariableBindings(_twoMadeBtn,_twoMissBtn,_threeMadeBtn,_threeMissBtn,_ftMadeBtn,_ftMissBtn,_defRebBtn,_offRebBtn,_assistBtn,_stealBtn,_blockBtn,_turnOverBtn,_foulBtn,_statsLabel,_dateLabel,_nameLabel,_pointLabel,_reboundLabel,_assistLabel,_stealLabel,_blockLabel,_turnOverLabel,_foulLabel);
+    NSDictionary *objDictionary = NSDictionaryOfVariableBindings(_twoMadeBtn,_twoMissBtn,_threeMadeBtn,_threeMissBtn,_ftMadeBtn,_ftMissBtn,_defRebBtn,_offRebBtn,_assistBtn,_stealBtn,_blockBtn,_turnOverBtn,_foulBtn,_statsLabel,_dateLabel,_nameLabel,_pointLabel,_reboundLabel,_assistLabel,_stealLabel,_blockLabel,_turnOverLabel,_foulLabel,_nextGameBtn);
     
 
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_twoMadeBtn(150)]-10-[_twoMissBtn(120)]" options:0 metrics:nil views:objDictionary]];
@@ -288,20 +300,23 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_assistBtn(100)]" options:0 metrics:nil views:objDictionary]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_stealBtn(100)]-60-[_blockBtn(100)]" options:0 metrics:nil views:objDictionary]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_turnOverBtn(100)]-60-[_foulBtn(100)]" options:0 metrics:nil views:objDictionary]];
+    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_nextGameBtn(100)]-10-|" options:0 metrics:nil views:objDictionary]];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_twoMadeBtn(40)]-10-[_threeMadeBtn(40)]-10-[_ftMadeBtn(40)]-10-[_defRebBtn(40)]-10-[_assistBtn(40)]-10-[_stealBtn(40)]-10-[_turnOverBtn(40)]" options:0 metrics:nil views:objDictionary]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_twoMissBtn(40)]-10-[_threeMissBtn(40)]-10-[_ftMissBtn(40)]-10-[_offRebBtn(40)]-60-[_blockBtn(40)]-10-[_foulBtn(40)]" options:0 metrics:nil views:objDictionary]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nextGameBtn(40)]-10-|" options:0 metrics:nil views:objDictionary]];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_statsLabel]|" options:0 metrics:nil views:objDictionary]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_dateLabel(100)][_nameLabel]|" options:0 metrics:nil views:objDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_pointLabel]-30-[_reboundLabel]-30-[_assistLabel]|" options:0 metrics:nil views:objDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_stealLabel]-30-[_blockLabel]|" options:0 metrics:nil views:objDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_turnOverLabel]-30-[_foulLabel]|" options:0 metrics:nil views:objDictionary]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_pointLabel]-30-[_reboundLabel]-30-[_assistLabel]" options:0 metrics:nil views:objDictionary]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_stealLabel]-30-[_blockLabel]" options:0 metrics:nil views:objDictionary]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_turnOverLabel]-30-[_foulLabel]-100-[_nextGameBtn(100)]-10-|" options:0 metrics:nil views:objDictionary]];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_statsLabel(30)][_dateLabel(30)][_pointLabel(30)][_stealLabel(30)][_turnOverLabel(30)]|" options:0 metrics:nil views:objDictionary]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_statsLabel(30)][_nameLabel(30)][_reboundLabel(30)][_blockLabel(30)][_foulLabel(30)]|" options:0 metrics:nil views:objDictionary]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_statsLabel(30)][_nameLabel(30)][_assistLabel(30)]-60-|" options:0 metrics:nil views:objDictionary]];
 
+    
     [self.view setBackgroundColor:[UIColor lightGrayColor]];
 }
 
